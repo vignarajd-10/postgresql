@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql-ha
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/vignarajd-10/postgresql.git'  # Replace with your Git repo
+    targetRevision: HEAD
+    path: postgresql-ha  # Path where `values.yaml` is located
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: postgresql
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

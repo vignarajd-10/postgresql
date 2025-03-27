@@ -1,0 +1,15 @@
+persistence:
+  size: 1Gi
+
+postgresql:
+  replicaCount: 3
+  password: TAEEREf6X1
+  repmgrPassword: yqRSjoFKqS
+
+
+pgpool:
+  replicaCount: 2
+  adminPassword: krjVaC32FT
+
+  configuration: |
+    failover_on_backend_error = "on"

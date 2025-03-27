@@ -1,0 +1,9 @@
+apiVersion: v1
+name: patroni
+description: 'Highly available elephant herd: HA PostgreSQL cluster.'
+version: 0.0.1
+
+dependencies:
+- name: patrogresql-ha
+  version: 0.0.1
+  repository: oci://registry-1.docker.io/bitnamicharts/postgresql-ha
