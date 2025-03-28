@@ -9,12 +9,12 @@ spec:
     repoURL: 'https://github.com/vignarajd-10/postgresql.git'  # Replace with your Git repo
     targetRevision: HEAD
     path: postgresql-ha  # Path where `values.yaml` is located
-    helm:
-      valueFiles:
-        - values.yaml
+    # helm:
+    #   valueFiles:
+    #     - values.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: postgresql
+    namespace: vignaraj
   syncPolicy:
     automated:
       prune: true

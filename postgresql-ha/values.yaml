@@ -1,5 +1,5 @@
 persistence:
-  size: 1Gi
+  size: 0.5Gi
 
 postgresql:
   replicaCount: 3
