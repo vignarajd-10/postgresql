@@ -17,7 +17,7 @@ postgresql:
     initialDelaySeconds: 60
 
 pgpool:
-  replicaCount: 2
+  replicaCount: 3
   adminPassword: pgpooladminpass
 
   configuration: |
