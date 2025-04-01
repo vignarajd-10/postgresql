@@ -10,8 +10,9 @@ spec:
     targetRevision: HEAD
     path: postgresql-ha  # Path where `values.yaml` is located
     helm:
-      valueFiles:
-        - values.yaml
+      values: |
+        pgpool:
+          replicaCount: 2
   destination:
     server: https://kubernetes.default.svc
     namespace: vignaraj
