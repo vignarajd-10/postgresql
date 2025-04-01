@@ -1,11 +1,11 @@
 namespaceOverride: vignaraj
-pgpool.replicaCount: 3
+
 persistence:
   size: 0.5Gi
   storageClass: my-storageclass
 
 postgresql:
-  replicaCount: 1
+  replicaCount: 3
   username: postgres
   password: pgpass
   adminUsername: ckpadmin
