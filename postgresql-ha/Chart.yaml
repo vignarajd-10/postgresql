@@ -4,6 +4,6 @@ description: 'Highly available elephant herd: HA PostgreSQL cluster.'
 version: 12.5.0
 
 dependencies:
-- name: patrogresql-ha
+- name: postgresql-ha
   version: 12.5.0
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://registry-1.docker.io/bitnamicharts
