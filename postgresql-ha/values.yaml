@@ -11,10 +11,6 @@ postgresql:
   adminUsername: ckpadmin
   adminPassword: ckppass
   repmgrPassword: repmgrpass
-  livenessProbe:
-    initialDelaySeconds: 60
-  readinessProbe:
-    initialDelaySeconds: 60
 
 pgpool:
   replicaCount: 2
