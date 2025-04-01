@@ -1,9 +1,9 @@
-apiVersion: v1
-name: patrogresql-ha
-description: 'Highly available elephant herd: HA PostgreSQL cluster.'
-version: 12.5.0
+apiVersion: v2
+name: postgresql-ha
+description: 'HA PostgreSQL cluster'
+version: 15.3.8
 
 dependencies:
 - name: postgresql-ha
-  version: 12.5.0
-  repository: oci://registry-1.docker.io/bitnamicharts/postgresql-ha
+  version: 15.3.8
+  repository: oci://registry-1.docker.io/bitnamicharts
