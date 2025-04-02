@@ -18,7 +18,6 @@ postgresql-ha:
   pgpool:
     replicaCount: 2
     adminPassword: pgpooladminpass
-    configurationCM: ""
     configuration: |
       failover_on_backend_error = "on"
       load_balance_mode = "on"
