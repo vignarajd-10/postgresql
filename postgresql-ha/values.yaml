@@ -17,8 +17,10 @@ postgresql:
     initialDelaySeconds: 60
 
 pgpool:
-  replicaCount: 3
+  replicaCount: 2
   adminPassword: pgpooladminpass
 
   configuration: |
     failover_on_backend_error = "on"
+    load_balance_mode = "on"
+    statement_level_load_balance = "on"
