@@ -1,23 +1,24 @@
-namespaceOverride: vignaraj
-
-persistence:
-  size: 0.5Gi
-  storageClass: my-storageclass
-
-postgresql:
-  replicaCount: 3
-  username: postgres
-  password: pgpass
-  adminUsername: ckpadmin
-  adminPassword: ckppass
-  repmgrPassword: repmgrpass
-  livenessProbe:
-    initialDelaySeconds: 60
-  readinessProbe:
-    initialDelaySeconds: 60
-
-pgpool:
-  replicaCount: 2
+postgresql-ha:
+  namespaceOverride: vignaraj
+  
+  persistence:
+    size: 0.5Gi
+    storageClass: my-storageclass
+  
+  postgresql:
+    replicaCount: 3
+    username: postgres
+    password: pgpass
+    adminUsername: ckpadmin
+    adminPassword: ckppass
+    repmgrPassword: repmgrpass
+    livenessProbe:
+      initialDelaySeconds: 60
+    readinessProbe:
+      initialDelaySeconds: 60
+  
+  pgpool:
+    replicaCount: 2
   adminPassword: pgpooladminpass
 
   configuration: |
