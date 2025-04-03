@@ -1,10 +1,4 @@
 keycloak:
-  proxy: edge
-  extraEnvVars:
-    - name: KC_PROXY
-      value: "edge"
-    - name: KC_CONFIG_BUILD
-      value: "false"
 
   readinessProbe:
     enabled: true
@@ -15,9 +9,3 @@ keycloak:
     enabled: true
     initialDelaySeconds: 60
     failureThreshold: 3
-  
-  resources:
-    limits:
-      memory: 2Gi
-    requests:
-      memory: 1Gi
