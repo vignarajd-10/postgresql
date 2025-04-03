@@ -1,5 +1,5 @@
 keycloak:
-  httpRelativePath: '/auth'
+  httpRelativePath: '/auth/'
   readinessProbe:
     enabled: true
     initialDelaySeconds: 60
