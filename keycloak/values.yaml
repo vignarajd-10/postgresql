@@ -18,3 +18,7 @@ keycloak:
     enabled: true
     initialDelaySeconds: 60
     failureThreshold: 3
+  
+  auth:
+    adminUser: admin
+    adminPassword: kcpass
