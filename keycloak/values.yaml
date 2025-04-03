@@ -8,6 +8,10 @@ keycloak:
     value: "postgres"
   - name: KC_DB_PASSWORD
     value: "pgpass"
+  - name: KEYCLOAK_ADMIN
+    value: "admin"
+  - name: KEYCLOAK_ADMIN_PASSWORD
+    value: "kcpass"
 
   readinessProbe:
     enabled: true
@@ -18,6 +22,3 @@ keycloak:
     enabled: true
     initialDelaySeconds: 60
     failureThreshold: 3
-  
-  auth:
-    adminPassword: kcpass
