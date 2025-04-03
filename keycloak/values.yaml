@@ -3,9 +3,16 @@ keycloak:
   extraEnvVars:
     - name: KC_PROXY
       value: "edge"
+    - name: KC_CONFIG_BUILD
+      value: "false"
   readinessProbe:
     enabled: true
     initialDelaySeconds: 60
   livenessProbe:
     enabled: true
     initialDelaySeconds: 60
+  resources:
+    limits:
+      memory: 2Gi
+    requests:
+      memory: 1Gi
