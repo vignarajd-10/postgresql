@@ -1,4 +1,8 @@
 keycloak:
+  proxy: edge
+  extraEnvVars:
+    - name: KC_PROXY
+      value: "edge"
   readinessProbe:
     enabled: true
     initialDelaySeconds: 60
