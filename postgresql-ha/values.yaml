@@ -25,7 +25,3 @@ postgresql-ha:
       failover_on_backend_error = "on"
       load_balance_mode = "on"
       statement_level_load_balance = "on"
-  
-  service:
-    type: LoadBalancer
-    port: 5432
