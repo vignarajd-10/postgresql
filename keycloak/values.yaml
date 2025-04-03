@@ -1,0 +1,7 @@
+keycloak:
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 60
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 60
