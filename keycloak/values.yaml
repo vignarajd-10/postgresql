@@ -1,5 +1,14 @@
 keycloak:
-  
+  extraEnvVars:
+  - name: KC_DB
+    value: "postgres"
+  - name: KC_DB_URL
+    value: "jdbc:postgresql://postgres-postgresql-ha-pgpool.default.svc.cluster.local:5432/postgres"
+  - name: KC_DB_USERNAME
+    value: "postgres"
+  - name: KC_DB_PASSWORD
+    value: "pgpass"
+
   readinessProbe:
     enabled: true
     initialDelaySeconds: 60
