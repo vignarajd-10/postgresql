@@ -1,5 +1,4 @@
 postgresql-ha:
-  namespaceOverride: vignaraj
 
   persistence:
     size: 0.5Gi
