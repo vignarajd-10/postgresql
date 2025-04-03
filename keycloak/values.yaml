@@ -5,12 +5,23 @@ keycloak:
       value: "edge"
     - name: KC_CONFIG_BUILD
       value: "false"
+
   readinessProbe:
     enabled: true
     initialDelaySeconds: 60
+    failureThreshold: 3
+    httpGet:
+      path: /auth/realms/master
+      port: http
+  
   livenessProbe:
     enabled: true
     initialDelaySeconds: 60
+    failureThreshold: 3
+    httpGet:
+      path: /auth
+      port: http
+  
   resources:
     limits:
       memory: 2Gi
