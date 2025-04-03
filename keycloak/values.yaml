@@ -20,5 +20,4 @@ keycloak:
     failureThreshold: 3
   
   auth:
-    adminUser: admin
     adminPassword: kcpass
