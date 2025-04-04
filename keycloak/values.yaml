@@ -2,3 +2,12 @@ keycloak:
   
   auth:
     adminPassword: "kcpass"
+
+  postgresql:
+    enabled: false
+  
+  externalDatabase:
+    host: postgres-postgresql-ha-pgpool.default.svc.cluster.local
+    port: 5432
+    user: "postgres"
+    password: "pgpass"
