@@ -1,4 +1,6 @@
 keycloak:
+  httpRelativePath: "/auth/"
+  
   extraEnvVars:
   # - name: KC_DB
   #   value: "postgres"
