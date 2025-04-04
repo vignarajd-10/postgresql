@@ -1,35 +1,35 @@
-keycloak:
-  httpRelativePath: "/auth/"
+# keycloak:
+#   httpRelativePath: "/auth/"
   
-  extraEnvVars:
-  # - name: KC_DB
-  #   value: "postgres"
-  # - name: KC_DB_URL
-  #   value: "jdbc:postgresql://postgres-postgresql-ha-pgpool.default.svc.cluster.local:5432/postgres"
-  # - name: KC_DB_USERNAME
-  #   value: "postgres"
-  # - name: KC_DB_PASSWORD
-  #   value: "pgpass"
-  - name: KEYCLOAK_ADMIN
-    value: "admin"
-  - name: KEYCLOAK_ADMIN_PASSWORD
-    value: "kcpass"
+#   extraEnvVars:
+#   # - name: KC_DB
+#   #   value: "postgres"
+#   # - name: KC_DB_URL
+#   #   value: "jdbc:postgresql://postgres-postgresql-ha-pgpool.default.svc.cluster.local:5432/postgres"
+#   # - name: KC_DB_USERNAME
+#   #   value: "postgres"
+#   # - name: KC_DB_PASSWORD
+#   #   value: "pgpass"
+#   - name: KEYCLOAK_ADMIN
+#     value: "admin"
+#   - name: KEYCLOAK_ADMIN_PASSWORD
+#     value: "kcpass"
   
-  postgresql:
-    enabled: false
+#   postgresql:
+#     enabled: false
 
-  externalDatabase:
-    host: "postgres-postgresql-ha-pgpool.default.svc.cluster.local"
-    port: 5432
-    user: "postgres"
-    password: "pgpass"
+#   externalDatabase:
+#     host: "postgres-postgresql-ha-pgpool.default.svc.cluster.local"
+#     port: 5432
+#     user: "postgres"
+#     password: "pgpass"
 
-  readinessProbe:
-    enabled: true
-    initialDelaySeconds: 0
-    failureThreshold: 3
+#   readinessProbe:
+#     enabled: true
+#     initialDelaySeconds: 0
+#     failureThreshold: 3
   
-  livenessProbe:
-    enabled: true
-    initialDelaySeconds: 0
-    failureThreshold: 3
+#   livenessProbe:
+#     enabled: true
+#     initialDelaySeconds: 0
+#     failureThreshold: 3
