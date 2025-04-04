@@ -24,3 +24,13 @@ postgresql-ha:
       failover_on_backend_error = "on"
       load_balance_mode = "on"
       statement_level_load_balance = "on"
+    
+    extraVolumeMounts:
+    - name: pool-hba-config
+      mountPath: /opt/bitnami/pgpool/conf/pool_hba.conf
+      subPath: pool_hba.conf
+    
+    extraVolumes:
+    - name: pool-hba-config
+      configMap:
+        name: pgpool-hba-config

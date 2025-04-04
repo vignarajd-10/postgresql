@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgpool-hba-config
+  namespace: postgre
+data:
+  pool_hba.conf: |
+    host     all     repmgr     all     trust
+    host     all     postgres   all     scram-sha-256
+    host     all     postgres   all     md5
+    host     all     all        all     scram-sha-256
