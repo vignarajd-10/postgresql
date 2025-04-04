@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: pgpool-hba-config
-  namespace: postgre
+  namespace: default
 data:
   pool_hba.conf: |
     host     all     repmgr     all     trust
