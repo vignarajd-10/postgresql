@@ -16,7 +16,7 @@ keycloak:
   
   extraEnvVars:
     - name: KEYCLOAK_EXTRA_ARGS
-      value: "-Dkeycloak.import=/config/realm.json"
+      value: "--import-realm"
   
   extraVolumeMounts:
     - name: config
