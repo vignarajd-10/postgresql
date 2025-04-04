@@ -20,7 +20,7 @@ keycloak:
   
   extraVolumeMounts:
     - name: config
-      mountPath: "/config"
+      mountPath: "/opt/keycloak/data/import"
       readOnly: true
   extraVolumes:
     - name: config
