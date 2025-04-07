@@ -4,4 +4,4 @@ metadata:
   name: keycloak-realm
 data:
   realm.json: |
-{{ .Files.Get "files/realm.json" | indent 4 }}
+{{ .Files.Get "files/iopreprod.json" | indent 4 }}
