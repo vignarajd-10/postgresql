@@ -32,8 +32,8 @@ keycloak:
       configMap:
         name: keycloak-realm
         items:
-        - key: "iopreprod.json"
-          path: "iopreprod.json"
+        - key: "realm.json"
+          path: "realm.json"
   
   extraEnvVars:
   - name: KEYCLOAK_EXTRA_ARGS

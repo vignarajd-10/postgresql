@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: keycloak-realm
 data:
-  iopreprod.json: |
-{{ .Files.Get "files/iopreprod.json" | indent 4 }}
+  realm.json: |
+{{ .Files.Get "files/realm.json" | indent 4 }}
