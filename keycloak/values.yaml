@@ -1,6 +1,6 @@
 keycloak:
   replicaCount: 3
-  fullnameOverride: postgresql-ha
+  fullnameOverride: keycloak
 
   auth:
     adminUser: "admin"
