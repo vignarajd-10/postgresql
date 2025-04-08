@@ -8,6 +8,35 @@ metadata:
 spec:
   keycloakCRName: keycloak
   realm:
-    configMap:
-      name: keycloak-realm
-      key: realm.json
+    {
+    "id": "myrealm",
+    "realm": "myrealm",
+    "enabled": true,
+    "clients": [
+      {
+        "clientId": "my-client",
+        "name": "My Client",
+        "enabled": true,
+        "protocol": "openid-connect",
+        "publicClient": true,
+        "redirectUris": ["http://localhost:8080/*"],
+        "webOrigins": ["+"]
+      }
+    ],
+    "users": [
+      {
+        "username": "testuser",
+        "enabled": true,
+        "email": "testuser@example.com",
+        "emailVerified": true,
+        "credentials": [
+          {
+            "type": "password",
+            "value": "Test@123",
+            "temporary": false
+          }
+        ]
+      }
+    ]
+  }
+  
