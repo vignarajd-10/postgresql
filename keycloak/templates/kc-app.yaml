@@ -3,6 +3,8 @@ kind: Keycloak
 metadata:
   name: keycloak
   namespace: my-keycloak-operator
+  labels:
+    app: sso
 spec:
   instances: 3
   db:
