@@ -7,14 +7,14 @@ keycloak:
     adminPassword: "kcpass"
 
   postgresql:
-    enabled: false
+    enabled: true
   
-  externalDatabase:
-    host: postgresql-ha-pgpool.default.svc.cluster.local
-    port: 5432
-    user: "postgres"
-    password: "pgpass"
-    database: "postgres"
+  # externalDatabase:
+  #   host: postgresql-ha-pgpool.default.svc.cluster.local
+  #   port: 5432
+  #   user: "postgres"
+  #   password: "pgpass"
+  #   database: "postgres"
   
   extraVolumeMounts:
   - name: config
