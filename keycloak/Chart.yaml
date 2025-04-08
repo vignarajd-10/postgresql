@@ -1,9 +1,4 @@
 apiVersion: v1
 name: keycloak
-description: 'Keycloak Deployment with Helm Charts.'
+description: 'Keycloak Deployment with OLM.'
 version: 24.4.14
-
-dependencies:
-- name: keycloak
-  version: 24.4.14
-  repository: oci://registry-1.docker.io/bitnamicharts
