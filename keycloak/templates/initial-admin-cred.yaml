@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keycloak-initial-admin
+  namespace: my-keycloak-operator
+type: Opaque
+stringData:
+  username: kcadmin
+  password: kcpass
