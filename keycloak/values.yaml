@@ -30,4 +30,4 @@ keycloak:
   
   extraEnvVars:
   - name: KEYCLOAK_EXTRA_ARGS
-    value: "--import-realm"
+    value: "--import-realm --verbose"
