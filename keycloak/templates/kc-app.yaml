@@ -4,7 +4,7 @@ metadata:
   name: keycloak
   namespace: my-keycloak-operator
 spec:
-  instances: 1
+  instances: 3
   db:
     vendor: postgres
     host: postgresql-ha-pgpool.default.svc.cluster.local
