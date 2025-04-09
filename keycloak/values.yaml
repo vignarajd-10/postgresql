@@ -1,7 +1,7 @@
 keycloak:
   
   postgres:
-    host: postgre-postgresql-ha-pgpool.default.svc.cluster.local
+    host: postgresql-ha-pgpool.default.svc.cluster.local
     port: 5432
     database: postgres
     username: postgres
