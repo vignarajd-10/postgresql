@@ -11,9 +11,9 @@ spec:
   instances: 3
   db:
     vendor: postgres
-    host: {{ $root.Values.postgres.host }}
-    port: {{ $root.Values.postgres.port }}
-    database: {{ $root.Values.postgres.database }}
+    host: {{ $root.Values.keycloak.postgres.host }}
+    port: {{ $root.Values.keycloak.postgres.port }}
+    database: {{ $root.Values.keycloak.postgres.database }}
     usernameSecret:
       name: keycloak-db-secret
       key: username
