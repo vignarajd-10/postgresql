@@ -1,5 +1,3 @@
-{{$root := . -}}
----
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: Keycloak
 metadata:
@@ -11,9 +9,9 @@ spec:
   instances: 3
   db:
     vendor: postgres
-    host: {{ $root.Values.keycloak.postgres.host }}
-    port: {{ $root.Values.keycloak.postgres.port }}
-    database: {{ $root.Values.keycloak.postgres.database }}
+    host: postgresql-ha-pgpool.default.svc.cluster.local
+    port: 5432
+    database: postgres
     usernameSecret:
       name: keycloak-db-secret
       key: username

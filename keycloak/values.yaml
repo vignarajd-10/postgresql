@@ -1,8 +1,0 @@
-keycloak:
-  
-  postgres:
-    host: postgre-postgresql-ha-pgpool.postgre.svc.cluster.local
-    port: 5432
-    database: postgres
-    username: postgres
-    password: pgpass
