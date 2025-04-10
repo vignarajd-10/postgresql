@@ -21,8 +21,6 @@ spec:
       name: keycloak-db-secret
       key: password
   http:
-    tlsSecret: kc-tls-secret
+    httpEnabled: true
   hostname:
-    hostname: test.keycloak.org
-  ingress:
-    className: nginx
+    strict: false
