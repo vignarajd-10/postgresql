@@ -26,4 +26,5 @@ spec:
     httpsPort: 443
     tlsSecret: kc-tls-secret
   hostname:
+    hostname: https://keycloak.local
     strict: false
