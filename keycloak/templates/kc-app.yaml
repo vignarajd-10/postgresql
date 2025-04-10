@@ -22,5 +22,7 @@ spec:
       key: password
   http:
     httpEnabled: true
+  tls:
+      enabled: true
   hostname:
     strict: false
