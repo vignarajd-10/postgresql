@@ -25,4 +25,5 @@ spec:
     httpPort: 80
     httpsPort: 443
   hostname:
+    hostname: https://keycloak.local
     strict: false
