@@ -22,6 +22,8 @@ spec:
       key: password
   http:
     httpEnabled: true
+    httpPort: 80
+    httpsPort: 443
   tls:
       enabled: true
   hostname:
