@@ -24,5 +24,6 @@ spec:
     httpEnabled: true
     httpPort: 80
     httpsPort: 443
+    tlsSecret: kc-tls-secret
   hostname:
     strict: false
