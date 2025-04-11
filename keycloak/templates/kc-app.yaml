@@ -26,7 +26,5 @@ spec:
   hostname:
     hostname: keycloak.local
     strict: false
-  proxy:
-    headers: xforwarded
   ingress:
     className: nginx
