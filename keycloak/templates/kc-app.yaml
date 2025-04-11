@@ -23,3 +23,5 @@ spec:
   http:
     httpEnabled: true
     httpPort: 8080
+  hostname:
+    strict: false
