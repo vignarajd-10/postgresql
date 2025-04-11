@@ -26,5 +26,3 @@ spec:
   hostname:
     hostname: keycloak.local
     strict: false
-  ingress:
-    className: nginx
