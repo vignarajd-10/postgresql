@@ -23,8 +23,3 @@ spec:
   http:
     httpEnabled: true
     httpPort: 8080
-  hostname:
-    hostname: test.keycloak.org
-    strict: false
-  ingress:
-    enabled: false
