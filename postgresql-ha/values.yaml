@@ -29,7 +29,25 @@ postgresql-ha:
     enabled: true
     cronjob:
       schedule: "*/2 * * * *"
-      command: ["/bin/sh","-c","pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file=${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump && find /backup -type f -name '*.pgdump' -mmin +5 -delete"]
+      command: 
+        - /bin/sh
+        - -c
+        - |
+          pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file=${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump
+          find /backup -type f -name '*.pgdump' -mmin +5 -delete"
+          export AZCOPY_ACCOUNT_NAME=$(cat /secrets/AZCOPY_ACCOUNT_NAME)
+          export AZCOPY_ACCOUNT_KEY=$(cat /secrets/AZCOPY_ACCOUNT_KEY)
+          curl -sL https://aka.ms/downloadazcopy-v10-linux | tar -xz --strip-components=1 -C /tmp
+          /tmp/azcopy copy "$FILE" "https://${AZCOPY_ACCOUNT_NAME}.blob.core.windows.net/pgsql-backups/" --recursive
+      
       storage:
         storageClass: my-storageclass
         size: 1Gi
+      extraVolumes:
+        - name: stg-acc-secret
+          secret:
+            secretName: stg-acc-secret
+      extraVolumeMounts:
+        - name: stg-acc-secret
+          mountPath: /secrets
+          readOnly: true
