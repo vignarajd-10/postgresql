@@ -30,3 +30,6 @@ postgresql-ha:
     cronjob:
       schedule: "*/2 * * * *"
       command: ["/bin/sh","-c","pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file=${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump && find /backup -type f -name '*.pgdump' -mmin +5 -delete"]
+      storage:
+        storageClass: my-storageclass
+        size: 1Gi
