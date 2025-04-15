@@ -33,7 +33,7 @@ postgresql-ha:
         - /bin/sh
         - -c
         - |
-          pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file=${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump
+          pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file=/azurebackup/pgdump/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump
           find /backup -type f -name '*.pgdump' -mmin +5 -delete
       
       storage:
@@ -47,4 +47,4 @@ postgresql-ha:
               containerName: pgsql-backups
       extraVolumeMounts:
         - name: azure-blob-storage
-          mountPath: /backup/pgdump
+          mountPath: /azurebackup/pgdump
