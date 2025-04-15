@@ -43,12 +43,8 @@ postgresql-ha:
         - name: azure-blob-storage
           csi:
             driver: blob.csi.azure.com
-            volumeHandle: pgsql-backups
             volumeAttributes:
               containerName: pgsql-backups
-            nodeStageSecretRef:
-              name: stg-acc-secret
-              namespace: default
       extraVolumeMounts:
         - name: azure-blob-storage
           mountPath: /backup/pgdump
