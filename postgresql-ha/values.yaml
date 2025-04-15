@@ -37,6 +37,7 @@ postgresql-ha:
           find /backup -type f -name '*.pgdump' -mmin +5 -delete
           export AZCOPY_ACCOUNT_NAME=$(cat /secrets/AZCOPY_ACCOUNT_NAME)
           export AZCOPY_ACCOUNT_KEY=$(cat /secrets/AZCOPY_ACCOUNT_KEY)
+          apt-get update && apt-get install -y curl
           curl -sL https://aka.ms/downloadazcopy-v10-linux | tar -xz --strip-components=1 -C /tmp
           /tmp/azcopy copy "$FILE" "https://${AZCOPY_ACCOUNT_NAME}.blob.core.windows.net/pgsql-backups/" --recursive
       
