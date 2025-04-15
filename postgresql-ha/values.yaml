@@ -40,10 +40,15 @@ postgresql-ha:
         storageClass: my-storageclass
         size: 1Gi
       extraVolumes:
-        - name: stg-acc-secret
-          secret:
-            secretName: stg-acc-secret
+        - name: azure-blob-storage
+          csi:
+            driver: blob.csi.azure.com
+            volumeHandle: pgsql-backups
+            volumeAttributes:
+              containerName: pgsql-backups
+            nodeStageSecretRef:
+              name: stg-acc-secret
+              namespace: default
       extraVolumeMounts:
-        - name: stg-acc-secret
-          mountPath: /secrets
-          readOnly: true
+        - name: azure-blob-storage
+          mountPath: /backup/pgdump
