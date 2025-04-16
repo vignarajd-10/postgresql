@@ -40,12 +40,14 @@ postgresql-ha:
         storageClass: my-storageclass
         size: 1Gi
       extraVolumes:
-        - name: azure-blob-storage
+        - name: persistent-storage
           csi:
             driver: blob.csi.azure.com
             volumeAttributes:
-              containerName: pgsql-backups
-              secretName: stg-acc-secret
+              containerName: pgsql-backups  # required
+              secretName: stg-acc-secret  # required
+              mountOptions: "-o allow_other --file-cache-timeout-in-seconds=120"
       extraVolumeMounts:
-        - name: azure-blob-storage
-          mountPath: /azurebackup/pgdump
+        - name: persistent-storage
+          mountPath: "/azurebackup/pgdump"
+          readOnly: false
