@@ -41,8 +41,8 @@ postgresql-ha:
           echo $AZCOPY_ACCOUNT_NAME
           echo $AZCOPY_ACCOUNT_KEY
           
-          apt-get update
-          apt-get install -y curl
+          sudo apt-get update
+          sudo apt-get install -y curl
           curl https://rclone.org/install.sh | bash
 
           rclone config create azureblob azure blob --account-name "$AZCOPY_ACCOUNT_NAME" --account-key "$AZCOPY_ACCOUNT_KEY"
