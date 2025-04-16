@@ -38,8 +38,10 @@ postgresql-ha:
           # Load secret values
           export AZCOPY_ACCOUNT_NAME=$(cat /mnt/secrets/AZCOPY_ACCOUNT_NAME)
           export AZCOPY_ACCOUNT_KEY=$(cat /mnt/secrets/AZCOPY_ACCOUNT_KEY)
-
-          apt-get update && apt-get install -y wget unzip curl
+          echo $AZCOPY_ACCOUNT_NAME
+          echo $AZCOPY_ACCOUNT_KEY
+          apt-get update 
+          apt-get install -y wget unzip curl
 
           # Install azcopy
           wget -O azcopy.zip https://aka.ms/downloadazcopy-v10-linux
