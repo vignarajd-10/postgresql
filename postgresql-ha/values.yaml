@@ -33,21 +33,37 @@ postgresql-ha:
         - /bin/sh
         - -c
         - |
-          pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file=/azurebackup/pgdump/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump
-          find /backup -type f -name '*.pgdump' -mmin +5 -delete
-      
-      storage:
-        storageClass: my-storageclass
-        size: 1Gi
+          set -e
+
+          # Load secret values
+          export AZCOPY_ACCOUNT_NAME=$(cat /mnt/secrets/AZCOPY_ACCOUNT_NAME)
+          export AZCOPY_ACCOUNT_KEY=$(cat /mnt/secrets/AZCOPY_ACCOUNT_KEY)
+
+          apt-get update && apt-get install -y wget unzip curl
+
+          # Install azcopy
+          wget -O azcopy.zip https://aka.ms/downloadazcopy-v10-linux
+          unzip azcopy.zip -d azcopy
+          cp ./azcopy/azcopy_linux_amd64_*/azcopy /usr/bin/
+          chmod +x /usr/bin/azcopy
+
+          # Dump PostgreSQL
+          BACKUP_FILE="/backup/pgdump/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').sql"
+          pg_dumpall --clean --if-exists --quote-all-identifiers --no-password --file="$BACKUP_FILE"
+
+          # Upload to Azure Blob Storage
+          DEST_URL="https://${AZCOPY_ACCOUNT_NAME}.blob.core.windows.net/pgsql-backups"
+          azcopy copy "$BACKUP_FILE" "$DEST_URL" \
+            --from-to=LocalBlob \
+            --recursive=false \
+            --dest-account-name="$AZCOPY_ACCOUNT_NAME" \
+            --dest-account-key="$AZCOPY_ACCOUNT_KEY"
       extraVolumes:
-        - name: persistent-storage
-          csi:
-            driver: blob.csi.azure.com
-            volumeAttributes:
-              containerName: pgsql-backups  # required
-              secretName: stg-acc-secret  # required
-              mountOptions: "-o allow_other --file-cache-timeout-in-seconds=120"
+        - name: stg-acc-secret
+          secret:
+            secretName: stg-acc-secret
+
       extraVolumeMounts:
-        - name: persistent-storage
-          mountPath: "/azurebackup/pgdump"
-          readOnly: false
+        - name: stg-acc-secret
+          mountPath: /mnt/secrets
+          readOnly: true
