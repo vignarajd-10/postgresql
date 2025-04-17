@@ -33,33 +33,6 @@ postgresql-ha:
         - /bin/sh
         - -c
         - |
-          set -e
-
-          # Load secret values
-          export AZCOPY_ACCOUNT_NAME=$(cat /mnt/secrets/AZCOPY_ACCOUNT_NAME)
-          export AZCOPY_ACCOUNT_KEY=$(cat /mnt/secrets/AZCOPY_ACCOUNT_KEY)
-          echo $AZCOPY_ACCOUNT_NAME
-          echo $AZCOPY_ACCOUNT_KEY
-          
-          sudo apt-get update
-          sudo apt-get install -y curl
-          curl https://rclone.org/install.sh | bash
-
-          rclone config create azureblob azure blob --account-name "$AZCOPY_ACCOUNT_NAME" --account-key "$AZCOPY_ACCOUNT_KEY"
-
           # Dump PostgreSQL
           BACKUP_FILE="/backup/pgdump/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').sql"
           pg_dumpall --clean --if-exists --quote-all-identifiers --no-password --file="$BACKUP_FILE"
-
-          # Upload to Azure Blob Storage
-          rclone copy "$BACKUP_FILE" "azureblob:pgsql-backups" --drive-chunk-size 64M
-      
-      extraVolumes:
-        - name: stg-acc-secret
-          secret:
-            secretName: stg-acc-secret
-
-      extraVolumeMounts:
-        - name: stg-acc-secret
-          mountPath: /mnt/secrets
-          readOnly: true
