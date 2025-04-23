@@ -65,7 +65,7 @@ spec:
 
               echo "Installing PostgreSQL..."
 
-              /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+              yes "" | /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
               install -d /usr/share/postgresql-common/pgdg
               curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
 
