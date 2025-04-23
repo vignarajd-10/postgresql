@@ -83,7 +83,7 @@ spec:
               # --- DATABASE BACKUP ---
 
               echo "Backing up PostgreSQL database: $POSTGRES_DB"
-              postgres pg_dump "$POSTGRES_DB" > "$BACKUP_FILE"
+              pg_dump "$POSTGRES_DB" > "$BACKUP_FILE"
 
               # --- AZCOPY LOGIN USING STORAGE KEY ---
 
