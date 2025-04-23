@@ -41,6 +41,8 @@ spec:
               curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz -C /tmp
               cp /tmp/azcopy_linux_amd64_*/azcopy /usr/bin/
               chmod +x /usr/bin/azcopy
+              echo "ls /usr/bin"
+              ls /usr/bin
               # Verify AzCopy installation
               azcopy --version
 
