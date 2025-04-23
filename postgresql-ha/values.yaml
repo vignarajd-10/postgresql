@@ -45,8 +45,8 @@ postgresql-ha:
         - /bin/sh
         - -c
         - |
-          apt update -y
-          apt install -y wget tar curl ca-certificates gnupg
+          sudo apt update -y
+          sudo apt install -y wget tar curl ca-certificates gnupg
 
           # Install AzCopy if not already
           if ! command -v azcopy &> /dev/null; then
