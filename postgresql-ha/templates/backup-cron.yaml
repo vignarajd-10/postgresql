@@ -38,8 +38,7 @@ spec:
               apk add --no-cache curl tar bash postgresql-client
 
               # Install AzCopy
-              curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz -C /tmp
-              cp /tmp/azcopy_linux_amd64_*/azcopy /usr/bin/
+              curl -L https://aka.ms/downloadazcopy-v10-linux | tar -C /usr/bin -xz
               chmod +x /usr/bin/azcopy
               echo "ls /usr/bin"
               ls /usr/bin
