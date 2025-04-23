@@ -64,12 +64,12 @@ spec:
 
               echo "Installing PostgreSQL..."
 
-              sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+              /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
               install -d /usr/share/postgresql-common/pgdg
               curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
 
               . /etc/os-release
-              sudo sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
+              sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
               
               apt update
               apt -y install postgresql
@@ -82,7 +82,7 @@ spec:
               # --- DATABASE BACKUP ---
 
               echo "Backing up PostgreSQL database: $POSTGRES_DB"
-              sudo -u postgres pg_dump "$POSTGRES_DB" > "$BACKUP_FILE"
+              postgres pg_dump "$POSTGRES_DB" > "$BACKUP_FILE"
 
               # --- AZCOPY LOGIN USING STORAGE KEY ---
 
