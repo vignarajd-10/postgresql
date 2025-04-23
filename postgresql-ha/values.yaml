@@ -26,7 +26,7 @@ postgresql-ha:
       statement_level_load_balance = "on"
   
   backup:
-    enabled: true
+    enabled: false
     cronjob:
       schedule: "*/2 * * * *"
       command: 
@@ -41,7 +41,5 @@ postgresql-ha:
       wal_level = replica
       archive_command = 'mkdir -p /bitnami/postgresql/wal-archive && test ! -f /bitnami/postgresql/wal-archive/%f && cp %p /bitnami/postgresql/wal-archive/%f'
     pgHbaConfiguration: |
-      host    all             all             0.0.0.0/0               trust
-      host    all             all             ::/0                    trust
       host    replication     postgres        0.0.0.0/0               trust
       host    replication     postgres        ::/0                    trust
