@@ -39,7 +39,7 @@ postgresql-ha:
 
           # Create the incremental backup using pg_basebackup
           export PGPASSWORD=pgpass
-          pg_basebackup --host=postgresql-ha-pgpool.default.svc.cluster.local --username=postgres --pgdata=${BACKUP_DIR} --format=tar --wal-method=stream --incremental --incremental-base-dir=${INCREMENTAL_BACKUP_DIR} --label=incremental-backup-$(date '+%Y-%m-%d-%H-%M')
+          pg_basebackup --host=postgresql-ha-postgresql.default.svc.cluster.local --username=postgres --pgdata=${BACKUP_DIR} --format=tar --wal-method=stream --incremental --incremental-base-dir=${INCREMENTAL_BACKUP_DIR} --label=incremental-backup-$(date '+%Y-%m-%d-%H-%M')
 
           # Archive the WAL files and delete older backups
           find /backup -type f -name '*.tar' -mmin +5 -delete
