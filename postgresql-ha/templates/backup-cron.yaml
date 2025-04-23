@@ -11,7 +11,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: pg-incremental-backup
-            image: postgres:17-alpine
+            image: ubuntu
             env:
             - name: PGPASSWORD
               value: pgpass
@@ -33,12 +33,15 @@ spec:
             - -c
             - |
               set -e
-              apt-get update && apt-get install -y postgresql-client curl tar gzip
+              # Install necessary packages
+              apt-get update && apt-get install -y curl tar gzip gnupg2
 
-              set -e
+              # Add PostgreSQL 17 repository and install client tools
+              echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -c | awk '{print $2}')-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list
+              curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+              apt-get update && apt-get install -y postgresql-client-17
 
-              # Install AzCopy (Alpine compatible version)
-              apk add --no-cache curl tar
+              # Install AzCopy
               curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz -C /tmp
               cp /tmp/azcopy_linux_amd64_*/azcopy /usr/bin/
               chmod +x /usr/bin/azcopy
@@ -48,12 +51,14 @@ spec:
               TIMESTAMP=$(date +%Y%m%d%H%M%S)
               BACKUP_FILE="$BACKUP_DIR/incremental-$TIMESTAMP.sql"
 
+              # Perform the PostgreSQL backup
               pg_dump -h postgresql-ha-pgpool.default.svc.cluster.local -U postgres -F c -f "$BACKUP_FILE"
 
               echo "Uploading to Azure..."
-              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/your-container-name/incremental-$TIMESTAMP.sql"
+              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/pgsql-backups/incremental-$TIMESTAMP.sql"
 
               echo "Backup completed at $(date)"
+
           volumes:
           - name: backup-data
             emptyDir: {}
