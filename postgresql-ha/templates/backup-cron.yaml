@@ -11,7 +11,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: pg-incremental-backup
-            image: postgres:17-alpine
+            image: ubuntu:20.04
             env:
             - name: PGPASSWORD
               value: pgpass
@@ -28,35 +28,67 @@ spec:
             volumeMounts:
             - name: backup-data
               mountPath: /backup
-            command:
+            command: 
             - /bin/bash
             - -c
             - |
-              set -e
 
-              # Install required packages
-              apk add --no-cache curl tar bash postgresql-client
+              set -e  # Exit on error
 
-              # Install AzCopy
-              curl -L https://aka.ms/downloadazcopy-v10-linux | tar -C /usr/bin -xz
-              echo "ls /usr/bin"
-              ls /usr/bin
-              chmod +x /usr/bin/azcopy
-              # Verify AzCopy installation
-              azcopy --version
+              # --- CONFIGURABLE VARIABLES ---
 
-              echo "Starting PostgreSQL backup at $(date)"
+              # PostgreSQL
+              POSTGRES_USER="postgres"
+              POSTGRES_DB="postgres"
               BACKUP_DIR="/backup"
-              TIMESTAMP=$(date +%Y%m%d%H%M%S)
-              BACKUP_FILE="$BACKUP_DIR/incremental-$TIMESTAMP.sql"
+              BACKUP_FILE="$BACKUP_DIR/pg_backup_$(date +%Y%m%d_%H%M%S).sql"
 
-              # Perform the PostgreSQL backup
-              pg_dump -h postgresql-ha-pgpool.default.svc.cluster.local -U postgres -F c -f "$BACKUP_FILE"
+              # Azure Blob Storage (Account Key-based Auth)
+              AZCOPY_BIN="/usr/bin/azcopy"
+              AZURE_CONTAINER_NAME="pgsql-backups"
 
-              echo "Uploading to Azure..."
-              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/pgsql-backups/incremental-$TIMESTAMP.sql"
+              # --- SYSTEM SETUP ---
 
-              echo "Backup completed at $(date)"
+              # Ensure dependencies
+              apt update -y
+              apt install -y wget tar curl ca-certificates gnupg lsb-release postgresql postgresql-contrib
+
+              # Install AzCopy if not already
+              if ! command -v azcopy &> /dev/null; then
+                  echo "Installing AzCopy..."
+                  wget -q https://aka.ms/downloadazcopy-v10-linux -O /tmp/azcopy.tar.gz
+                  tar -xvzf /tmp/azcopy.tar.gz -C /tmp
+                  mv /tmp/azcopy_linux_amd64_*/azcopy "$AZCOPY_BIN"
+                  chmod +x "$AZCOPY_BIN"
+              fi
+
+              # Ensure backup directory exists
+              mkdir -p "$BACKUP_DIR"
+
+              # --- DATABASE BACKUP ---
+
+              echo "Backing up PostgreSQL database: $POSTGRES_DB"
+              sudo -u postgres pg_dump "$POSTGRES_DB" > "$BACKUP_FILE"
+
+              # --- AZCOPY LOGIN USING STORAGE KEY ---
+
+              echo "Logging in to Azure Storage using Storage Account Key..."
+              export AZCOPY_ACCOUNT_NAME="$AZURE_STORAGE_ACCOUNT"
+              export AZCOPY_ACCOUNT_KEY="$AZURE_STORAGE_KEY"
+
+              # --- UPLOAD TO BLOB STORAGE ---
+
+              echo "Uploading backup to Azure Blob Storage..."
+              "$AZCOPY_BIN" copy "$BACKUP_FILE" "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_CONTAINER_NAME/$(basename "$BACKUP_FILE")"
+
+              # --- CLEANUP ---
+
+              echo "Cleaning up..."
+              rm -f "$BACKUP_FILE"
+
+              echo "Backup and upload completed successfully at $(date)"
+
+              
 
           volumes:
           - name: backup-data
