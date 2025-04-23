@@ -45,7 +45,7 @@ spec:
               TIMESTAMP=$(date +%Y%m%d%H%M%S)
               BACKUP_FILE="$BACKUP_DIR/incremental-$TIMESTAMP.sql"
 
-              pg_dump -U postgres -F c -f "$BACKUP_FILE"
+              pg_dump -h postgresql-ha-pgpool.default.svc.cluster.local -U postgres -F c -f "$BACKUP_FILE"
 
               echo "Uploading to Azure..."
               azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/pgsql-backups/incremental-$TIMESTAMP.sql"
