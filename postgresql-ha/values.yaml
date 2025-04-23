@@ -33,16 +33,8 @@ postgresql-ha:
         - /bin/sh
         - -c
         - |
-          # Define the path for storing the incremental backup
-          BACKUP_DIR=/bitnami/postgresql/backup
-          INCREMENTAL_BACKUP_DIR=/bitnami/postgresql/incremental-backup
-
-          # Create the incremental backup using pg_basebackup
-          export PGPASSWORD=pgpass
-          pg_basebackup --host=postgresql-ha-postgresql.default.svc.cluster.local --username=postgres --pgdata=${BACKUP_DIR} --format=tar --wal-method=stream --incremental --incremental-base-dir=${INCREMENTAL_BACKUP_DIR} --label=incremental-backup-$(date '+%Y-%m-%d-%H-%M')
-
-          # Archive the WAL files and delete older backups
-          find /backup -type f -name '*.tar' -mmin +5 -delete
+          pg_basebackup -D /backup -x
+  
   primary:
     extendedConfiguration: |
       archive_mode = on
