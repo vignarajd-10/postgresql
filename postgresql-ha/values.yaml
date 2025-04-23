@@ -15,8 +15,8 @@ postgresql-ha:
       initialDelaySeconds: 60
     readinessProbe:
       initialDelaySeconds: 60
-    pgHbaConfiguration: |
-      host    replication     postgres        0.0.0.0/0               trust
+    # pgHbaConfiguration: |
+    #   host    replication     postgres        0.0.0.0/0               trust
 
   pgpool:
     replicaCount: 2
