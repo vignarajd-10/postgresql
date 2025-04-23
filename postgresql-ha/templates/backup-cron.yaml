@@ -34,6 +34,7 @@ spec:
             - |
               set -e
               apt-get update && apt-get install -y postgresql-client curl tar gzip
+
               # Install AzCopy
               curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz -C /tmp
               cp /tmp/azcopy_linux_amd64_*/azcopy /usr/bin/
@@ -50,5 +51,6 @@ spec:
               azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/your-container-name/incremental-$TIMESTAMP.sql"
 
               echo "Backup completed at $(date)"
+          volumes:
           - name: backup-data
             emptyDir: {}
