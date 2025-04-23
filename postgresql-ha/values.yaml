@@ -33,7 +33,7 @@ postgresql-ha:
         - /bin/sh
         - -c
         - |
-          pg_basebackup -D /backup
+          pg_basebackup -U postgres -D /backup
   
   primary:
     extendedConfiguration: |
