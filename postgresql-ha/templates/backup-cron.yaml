@@ -83,7 +83,7 @@ spec:
               # --- DATABASE BACKUP ---
 
               echo "Backing up PostgreSQL database: $POSTGRES_DB"
-              pg_basebackup -h postgresql-ha-pgpool.default.svc.cluster.local -p 5432 -D "$BACKUP_DIR"
+              pg_basebackup -h postgresql-ha-pgpool.default.svc.cluster.local -p 5432 -U $POSTGRES_USER -D "$BACKUP_DIR"
 
               # --- AZCOPY LOGIN USING STORAGE KEY ---
 
