@@ -52,7 +52,7 @@ spec:
 
               # Ensure dependencies
               apt update -y
-              apt install -y wget tar curl ca-certificates postgresql-common
+              apt install -y wget tar curl ca-certificates postgresql-common gnupg
 
               # Install AzCopy if not already
               if ! command -v azcopy &> /dev/null; then
