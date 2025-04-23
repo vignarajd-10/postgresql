@@ -36,11 +36,6 @@ postgresql-ha:
           pg_basebackup -U postgres -D /backup
   
   primary:
-    extendedConfiguration: |
-      archive_mode = on
-      wal_level = replica
-      archive_command = 'mkdir -p /bitnami/postgresql/wal-archive && test ! -f /bitnami/postgresql/wal-archive/%f && cp %p /bitnami/postgresql/wal-archive/%f'
-  primary:
     pgHbaConfiguration: |
       host    replication     postgres        0.0.0.0/0               trust
       host    replication     postgres        ::/0                    trust
