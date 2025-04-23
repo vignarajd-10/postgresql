@@ -11,7 +11,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: pg-incremental-backup
-            image: ubuntu
+            image: postgres:17-alpine
             env:
             - name: PGPASSWORD
               value: pgpass
@@ -33,13 +33,9 @@ spec:
             - -c
             - |
               set -e
-              # Install necessary packages
-              apt-get update && apt-get install -y curl tar gzip gnupg2
 
-              # Add PostgreSQL 17 repository and install client tools
-              echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -c | awk '{print $2}')-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list
-              curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-              apt-get update && apt-get install -y postgresql-client-17
+              # Install curl, tar, and PostgreSQL client (17)
+              apk add --no-cache curl tar bash postgresql-client
 
               # Install AzCopy
               curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz -C /tmp
