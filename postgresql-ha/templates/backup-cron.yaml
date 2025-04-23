@@ -51,7 +51,7 @@ spec:
 
               # Ensure dependencies
               apt update -y
-              apt install -y wget tar curl ca-certificates gnupg lsb-release postgresql postgresql-contrib
+              apt install -y wget tar curl ca-certificates postgresql-common
 
               # Install AzCopy if not already
               if ! command -v azcopy &> /dev/null; then
@@ -61,6 +61,20 @@ spec:
                   mv /tmp/azcopy_linux_amd64_*/azcopy "$AZCOPY_BIN"
                   chmod +x "$AZCOPY_BIN"
               fi
+
+              echo "Installing PostgreSQL..."
+
+              sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+              install -d /usr/share/postgresql-common/pgdg
+              curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+              . /etc/os-release
+              sudo sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
+              
+              apt update
+              apt -y install postgresql
+              echo "PostgreSQL Installed!"
+
 
               # Ensure backup directory exists
               mkdir -p "$BACKUP_DIR"
