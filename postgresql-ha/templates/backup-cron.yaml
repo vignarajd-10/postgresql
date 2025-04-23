@@ -83,7 +83,7 @@ spec:
               # --- DATABASE BACKUP ---
 
               echo "Backing up PostgreSQL database: $POSTGRES_DB"
-              pg_dump "$POSTGRES_DB" > "$BACKUP_FILE"
+              pg_basebackup -h postgresql-ha-pgpool.default.svc.cluster.local -p 5432 -D "$BACKUP_DIR"
 
               # --- AZCOPY LOGIN USING STORAGE KEY ---
 
@@ -94,12 +94,12 @@ spec:
               # --- UPLOAD TO BLOB STORAGE ---
 
               echo "Uploading backup to Azure Blob Storage..."
-              "$AZCOPY_BIN" copy "$BACKUP_FILE" "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_CONTAINER_NAME/$(basename "$BACKUP_FILE")"
+              "$AZCOPY_BIN" copy "$BACKUP_DIR" "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_CONTAINER_NAME/$(basename "$BACKUP_FILE")"
 
               # --- CLEANUP ---
 
               echo "Cleaning up..."
-              rm -f "$BACKUP_FILE"
+              rm -f "$BACKUP_DIR"
 
               echo "Backup and upload completed successfully at $(date)"
 
