@@ -45,10 +45,10 @@ spec:
               TIMESTAMP=$(date +%Y%m%d%H%M%S)
               BACKUP_FILE="$BACKUP_DIR/incremental-$TIMESTAMP.sql"
 
-              pg_dump -h postgres-service -U postgres -F c -f "$BACKUP_FILE"
+              pg_dump -U postgres -F c -f "$BACKUP_FILE"
 
               echo "Uploading to Azure..."
-              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/your-container-name/incremental-$TIMESTAMP.sql"
+              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/pgsql-backups/incremental-$TIMESTAMP.sql"
 
               echo "Backup completed at $(date)"
           volumes:
