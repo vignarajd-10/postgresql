@@ -96,7 +96,7 @@ spec:
               # --- UPLOAD TO BLOB STORAGE ---
 
               echo "Uploading backup to Azure Blob Storage..."
-              "$AZCOPY_BIN" copy "$BACKUP_DIR" "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_CONTAINER_NAME/$(basename "$BACKUP_FILE")"
+              "$AZCOPY_BIN" copy "$BACKUP_FILE" "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_CONTAINER_NAME/$(basename "$BACKUP_FILE")" --from-to=LocalBlob
 
               # --- CLEANUP ---
 
