@@ -33,9 +33,15 @@ postgresql-ha:
         - /bin/sh
         - -c
         - |
-          pg_dumpall --clean --if-exists --load-via-partition-root --quote-all-identifiers --no-password --file=${PGDUMP_DIR}/pg_dumpall-$(date '+%Y-%m-%d-%H-%M').pgdump
-          find /backup -type f -name '*.pgdump' -mmin +5 -delete
-  
+          # Define the path for storing the incremental backup
+          BACKUP_DIR=/bitnami/postgresql/backup
+          INCREMENTAL_BACKUP_DIR=/bitnami/postgresql/incremental-backup
+
+          # Create the incremental backup using pg_basebackup
+          pg_basebackup --host=localhost --username=postgres --pgdata=${BACKUP_DIR} --format=tar --wal-method=stream --incremental --incremental-base-dir=${INCREMENTAL_BACKUP_DIR} --label=incremental-backup-$(date '+%Y-%m-%d-%H-%M')
+
+          # Archive the WAL files and delete older backups
+          find /backup -type f -name '*.tar' -mmin +5 -delete
   primary:
     extendedConfiguration: |
       archive_mode = on
