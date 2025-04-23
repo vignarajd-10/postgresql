@@ -58,9 +58,9 @@ postgresql-ha:
           fi
           echo "Azcopy Install Successfully!"
 
-          pg_basebackup -U postgres -D /backup
+          pg_basebackup -U postgres -D /backup/pgdump
 
-          ls /backup
+          ls /backup/pgdump
 
           getent hosts postgresql-ha-pgpool.default.svc.cluster.local
 
