@@ -58,7 +58,7 @@ postgresql-ha:
           fi
           echo "Azcopy Install Successfully!"
 
-          pg_basebackup -U postgres -D /backup/pgdump
+          pg_basebackup -U postgres -D /backup/pgdump --incremental
 
           ls /backup/pgdump
 
