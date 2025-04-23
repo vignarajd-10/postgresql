@@ -87,7 +87,7 @@ spec:
 
               # --- AZCOPY LOGIN USING STORAGE KEY ---
 
-              cat "hi, from postgresql!" > $BACKUP_DIR/sample.text
+              cat "hi, from postgresql!" > $BACKUP_DIR/sample.txt
 
               echo "Logging in to Azure Storage using Storage Account Key..."
               export AZCOPY_ACCOUNT_NAME="$AZURE_STORAGE_ACCOUNT"
