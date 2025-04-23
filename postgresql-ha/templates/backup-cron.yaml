@@ -34,13 +34,15 @@ spec:
             - |
               set -e
 
-              # Install curl, tar, and PostgreSQL client (17)
+              # Install required packages
               apk add --no-cache curl tar bash postgresql-client
 
               # Install AzCopy
               curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz -C /tmp
               cp /tmp/azcopy_linux_amd64_*/azcopy /usr/bin/
               chmod +x /usr/bin/azcopy
+              # Verify AzCopy installation
+              azcopy --version
 
               echo "Starting PostgreSQL backup at $(date)"
               BACKUP_DIR="/backup"
