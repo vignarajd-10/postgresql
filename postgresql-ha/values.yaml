@@ -38,7 +38,7 @@ postgresql-ha:
       statement_level_load_balance = "on"
   
   backup:
-    enabled: true
+    enabled: false
     cronjob:
       schedule: "*/2 * * * *"
       command: 
