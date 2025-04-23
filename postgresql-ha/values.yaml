@@ -15,6 +15,8 @@ postgresql-ha:
       initialDelaySeconds: 60
     readinessProbe:
       initialDelaySeconds: 60
+    pgHbaConfiguration: |
+      host    replication     postgres        0.0.0.0/0               trust
 
   pgpool:
     replicaCount: 2
@@ -51,7 +53,3 @@ postgresql-ha:
           getent hosts postgresql-ha-pgpool.default.svc.cluster.local
 
           echo "Backup Successfully!"
-  
-  primary:
-    pgHbaConfiguration: |
-      host    replication     postgres        0.0.0.0/0               trust
