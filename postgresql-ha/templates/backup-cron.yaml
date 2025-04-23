@@ -33,12 +33,10 @@ spec:
             - -c
             - |
               set -e
-              apt-get update && apt-get install -y postgresql-client wget unzip
-
-              # Install azcopy
-              wget -O azcopy.zip https://aka.ms/downloadazcopy-v10-linux
-              unzip azcopy.zip -d azcopy
-              cp azcopy/azcopy_linux_amd64_*/azcopy /usr/bin/
+              apt-get update && apt-get install -y postgresql-client curl tar gzip
+              # Install AzCopy
+              curl -L https://aka.ms/downloadazcopy-v10-linux | tar -xz -C /tmp
+              cp /tmp/azcopy_linux_amd64_*/azcopy /usr/bin/
               chmod +x /usr/bin/azcopy
 
               echo "Starting PostgreSQL backup at $(date)"
@@ -49,9 +47,8 @@ spec:
               pg_dump -h postgres-service -U postgres -F c -f "$BACKUP_FILE"
 
               echo "Uploading to Azure..."
-              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/your-container-name/incremental-$TIMESTAMP.sql" --recursive=false
+              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/your-container-name/incremental-$TIMESTAMP.sql"
 
               echo "Backup completed at $(date)"
-          volumes:
           - name: backup-data
             emptyDir: {}
