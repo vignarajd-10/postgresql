@@ -26,14 +26,29 @@ postgresql-ha:
       statement_level_load_balance = "on"
   
   backup:
-    enabled: false
+    enabled: true
     cronjob:
       schedule: "*/2 * * * *"
       command: 
         - /bin/sh
         - -c
         - |
+          apt update -y
+          apt install -y wget tar curl ca-certificates gnupg
+
+          # Install AzCopy if not already
+          if ! command -v azcopy &> /dev/null; then
+              echo "Installing AzCopy..."
+              wget -q https://aka.ms/downloadazcopy-v10-linux -O /tmp/azcopy.tar.gz
+              tar -xvzf /tmp/azcopy.tar.gz -C /tmp
+              mv /tmp/azcopy_linux_amd64_*/azcopy "$AZCOPY_BIN"
+              chmod +x "$AZCOPY_BIN"
+          fi
+          echo "Azcopy Install Successfully!"
+
           pg_basebackup -U postgres -D /backup
+
+          echo "Backup Successfully!"
   
   primary:
     pgHbaConfiguration: |
