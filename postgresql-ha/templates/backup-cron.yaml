@@ -11,7 +11,7 @@ spec:
           restartPolicy: OnFailure
           containers:
           - name: pg-incremental-backup
-            image: mcr.microsoft.com/azure-cli  # has azcopy preinstalled
+            image: ubuntu
             env:
             - name: PGPASSWORD
               value: pgpass
@@ -33,18 +33,25 @@ spec:
             - -c
             - |
               set -e
+              apt-get update && apt-get install -y postgresql-client wget unzip
+
+              # Install azcopy
+              wget -O azcopy.zip https://aka.ms/downloadazcopy-v10-linux
+              unzip azcopy.zip -d azcopy
+              cp azcopy/azcopy_linux_amd64_*/azcopy /usr/bin/
+              chmod +x /usr/bin/azcopy
+
               echo "Starting PostgreSQL backup at $(date)"
               BACKUP_DIR="/backup"
               TIMESTAMP=$(date +%Y%m%d%H%M%S)
               BACKUP_FILE="$BACKUP_DIR/incremental-$TIMESTAMP.sql"
 
-              # Perform the backup (can be customized to do incremental using WAL or rsync if needed)
               pg_dump -h postgres-service -U postgres -F c -f "$BACKUP_FILE"
 
-              echo "Uploading to Azure Blob Storage..."
+              echo "Uploading to Azure..."
               azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/your-container-name/incremental-$TIMESTAMP.sql" --recursive=false
 
-              echo "Backup completed and uploaded successfully!"
+              echo "Backup completed at $(date)"
           volumes:
           - name: backup-data
             emptyDir: {}
