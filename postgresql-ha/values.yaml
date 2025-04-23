@@ -48,6 +48,8 @@ postgresql-ha:
 
           pg_basebackup -U postgres -D /backup
 
+          getent hosts postgresql-ha-pgpool.default.svc.cluster.local
+
           echo "Backup Successfully!"
   
   primary:
