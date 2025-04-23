@@ -38,4 +38,3 @@ postgresql-ha:
   primary:
     pgHbaConfiguration: |
       host    replication     postgres        0.0.0.0/0               trust
-      host    replication     postgres        ::/0                    trust
