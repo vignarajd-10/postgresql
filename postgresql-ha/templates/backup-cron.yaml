@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-incremental-backup
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: pg-incremental-backup
+            image: mcr.microsoft.com/azure-cli  # has azcopy preinstalled
+            env:
+            - name: PGPASSWORD
+              value: pgpass
+            - name: AZURE_STORAGE_ACCOUNT
+              valueFrom:
+                secretKeyRef:
+                  name: stg-acc-secret
+                  key: AZCOPY_ACCOUNT_NAME
+            - name: AZURE_STORAGE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stg-acc-secret
+                  key: AZCOPY_ACCOUNT_KEY
+            volumeMounts:
+            - name: backup-data
+              mountPath: /backup
+            command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              echo "Starting PostgreSQL backup at $(date)"
+              BACKUP_DIR="/backup"
+              TIMESTAMP=$(date +%Y%m%d%H%M%S)
+              BACKUP_FILE="$BACKUP_DIR/incremental-$TIMESTAMP.sql"
+
+              # Perform the backup (can be customized to do incremental using WAL or rsync if needed)
+              pg_dump -h postgres-service -U postgres -F c -f "$BACKUP_FILE"
+
+              echo "Uploading to Azure Blob Storage..."
+              azcopy copy "$BACKUP_FILE" "https://${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net/your-container-name/incremental-$TIMESTAMP.sql" --recursive=false
+
+              echo "Backup completed and uploaded successfully!"
+          volumes:
+          - name: backup-data
+            emptyDir: {}
