@@ -11,19 +11,19 @@ spec:
       port: 2701{{add 7 $i}}
   selector:
     statefulset.kubernetes.io/pod-name: local-mongodb-{{$i}}
----
-apiVersion: k8s.nginx.org/v1
-kind: TransportServer
-metadata:
-  name: local-mongo-{{$i}}
-spec:
-  listener:
-    name: local-mongo-{{$i}}
-    protocol: TCP
-  upstreams:
-    - name: external-mongo-service-{{$i}}
-      service: external-mongo-service-{{$i}}
-      port: 2701{{add 7 $i}}
-  action:
-    pass: external-mongo-service-{{$i}}
+# ---
+# apiVersion: k8s.nginx.org/v1
+# kind: TransportServer
+# metadata:
+#   name: local-mongo-{{$i}}
+# spec:
+#   listener:
+#     name: local-mongo-{{$i}}
+#     protocol: TCP
+#   upstreams:
+#     - name: external-mongo-service-{{$i}}
+#       service: external-mongo-service-{{$i}}
+#       port: 2701{{add 7 $i}}
+#   action:
+#     pass: external-mongo-service-{{$i}}
 {{end}}
