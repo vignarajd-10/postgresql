@@ -2,7 +2,7 @@ postgresql-ha:
   fullnameOverride: postgresql-ha
   persistence:
     size: 0.5Gi
-    storageClass: my-storageclass
+    # storageClass: my-storageclass
     # existingClaim: postgres-pvc
 
   postgresql:
